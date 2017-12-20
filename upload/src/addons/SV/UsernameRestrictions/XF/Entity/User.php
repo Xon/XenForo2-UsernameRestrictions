@@ -2,7 +2,8 @@
 
 namespace SV\UsernameRestrictions\XF\Entity;
 
-class User extends XFCP_User {
+class User extends XFCP_User
+{
     protected function verifyUsername(&$username)
     {
         $ret = parent::verifyUsername($username);
@@ -15,6 +16,7 @@ class User extends XFCP_User {
         if (substr($username, 0, 1) == '[')
         {
             $this->error(\XF::Phrase('please_enter_another_name_required_format'), 'username');
+
             return false;
         }
 
@@ -31,18 +33,20 @@ class User extends XFCP_User {
         $userGroupRepo = $this->em()->getRepository('XF:UserGroup');
         $groups = $userGroupRepo->findUserGroupsForList();
 
-        foreach($groups as $group)
+        foreach ($groups as $group)
         {
             $groupname = utf8_strtolower($this->standardizeWhiteSpace($group['title']));
             if (strcmp($groupname, $username_lowercase) === 0)
             {
                 $this->error(\XF::phrase('usernames_must_be_unique'), 'username');
+
                 return false;
             }
 
             if ($blockSubset && (utf8_strpos($groupname, $username_lowercase, 0) === 0))
             {
                 $this->error(\XF::Phrase('usernames_must_be_unique'), 'username');
+
                 return false;
             }
 
@@ -51,15 +55,18 @@ class User extends XFCP_User {
             if (strcmp($groupname, $username_lowercase) === 0)
             {
                 $this->error(\XF::phrase('usernames_must_be_unique'), 'username');
+
                 return false;
             }
 
             if ($blockSubset && (utf8_strpos($groupname, $username_lowercase, 0) === 0))
             {
                 $this->error(\XF::Phrase('usernames_must_be_unique'), 'username');
+
                 return false;
             }
         }
+
         return $ret;
     }
 
@@ -78,7 +85,9 @@ class User extends XFCP_User {
                 }
             }
         }
-        catch (\Exception $e) {}
+        catch (\Exception $e)
+        {
+        }
 
         return trim($text);
     }
