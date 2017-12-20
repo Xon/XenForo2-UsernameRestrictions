@@ -1,0 +1,8 @@
+{
+    "src/addons/SV/UsernameRestrictions/addon.json": "645093836de57d2ef62131f94d124b8b0650c14b5a2379c3faf5231f30e7bba1",
+    "src/addons/SV/UsernameRestrictions/XF/Entity/User.php": "8ed96e2ec031a4cc37442ebfe073dd73e507ed2f100112bed7cf2259659ed581",
+    "src/addons/SV/UsernameRestrictions/_data/class_extensions.xml": "65fdcd78015e233953e3065d57bc22f9991ce9bc00131ffcd4f89578170f3d25",
+    "src/addons/SV/UsernameRestrictions/_data/options.xml": "f6d36d2d89436a5d15013a1ab99f151936d7f296cbfaa6c8fd8c73835401d975",
+    "src/addons/SV/UsernameRestrictions/_data/option_groups.xml": "a903862456b8e73a591105b185d4360b31382ec776533bd55e3004fc0c27d6c4",
+    "src/addons/SV/UsernameRestrictions/_data/phrases.xml": "4d8f76de87eed596e276fec282bf68c781658faa496786add668a76fd58e96bd"
+}
