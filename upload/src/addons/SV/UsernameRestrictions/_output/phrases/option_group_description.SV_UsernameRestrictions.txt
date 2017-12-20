@@ -1,0 +1,1 @@
+Imposes additional restrictions on usernames. Prevents user sign ups to select usernames which match user groups

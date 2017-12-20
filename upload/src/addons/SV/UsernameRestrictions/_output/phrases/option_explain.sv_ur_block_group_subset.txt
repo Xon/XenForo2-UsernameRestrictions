@@ -1,0 +1,1 @@
+Prevents a username which is a subset of any user group from being picked by users
