@@ -1,0 +1,1 @@
+Forces all renames to obey all additional restrictions on usernames

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<phrases>
-  <phrase title="option.sv_ur_apply_to_admins" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Apply extra username restrictions to administrators]]></phrase>
-  <phrase title="option.sv_ur_block_group_subset" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Block usernames as a subset of a user group name]]></phrase>
-  <phrase title="option_explain.sv_ur_apply_to_admins" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Forces all renames to obey all additional restrictions on usernames]]></phrase>
-  <phrase title="option_explain.sv_ur_block_group_subset" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Prevents a username which is a subset of any user group from being picked by users]]></phrase>
-  <phrase title="option_group.SV_UsernameRestrictions" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Username Restrictions]]></phrase>
-  <phrase title="option_group_description.SV_UsernameRestrictions" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Imposes additional restrictions on usernames. Prevents user sign ups to select usernames which match user groups]]></phrase>
-</phrases>
