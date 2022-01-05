@@ -1,4 +1,6 @@
 {
+    "icon": "",
     "display_order": 111,
+    "advanced": false,
     "debug_only": false
 }
