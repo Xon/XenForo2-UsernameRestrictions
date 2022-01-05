@@ -2,12 +2,18 @@
 
 namespace SV\UsernameRestrictions\XF\Entity;
 
+use function strlen, substr, utf8_strpos, utf8_strtolower, strcmp, preg_replace, preg_match, is_string;
+
 class User extends XFCP_User
 {
+    /** @noinspection PhpMissingReturnTypeInspection */
     protected function verifyUsername(&$username)
     {
+        // force to string
+        $username = strval($username);
+
         $ret = parent::verifyUsername($username);
-        if (empty($ret) || empty($username))
+        if (!$ret || strlen($username) === 0)
         {
             return $ret;
         }
@@ -20,13 +26,18 @@ class User extends XFCP_User
             return false;
         }
 
+        if ($username === $this->getExistingValue('username'))
+        {
+            return true; // allow existing
+        }
+
         $options = \XF::app()->options();
-        if (!$options->sv_ur_apply_to_admins && !empty(\XF::visitor()->Admin))
+        if (!($options->sv_ur_apply_to_admins ?? true) && !\XF::visitor()->is_admin)
         {
             return $ret;
         }
 
-        $blockSubset = $options->sv_ur_block_group_subset;
+        $blockSubset = $options->sv_ur_block_group_subset ?? false;
         $username_lowercase = utf8_strtolower($username);
 
         /** @var \XF\Repository\UserGroup $userGroupRepo */
@@ -70,7 +81,7 @@ class User extends XFCP_User
         return $ret;
     }
 
-    function standardizeWhiteSpace($text)
+    function standardizeWhiteSpace(string $text): string
     {
         $text = preg_replace('/\s+/u', ' ', $text);
         try
