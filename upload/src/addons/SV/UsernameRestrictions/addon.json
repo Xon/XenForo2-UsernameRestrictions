@@ -2,15 +2,16 @@
     "legacy_addon_id": "SV_UsernameRestrictions",
     "title": "Username Restrictions",
     "description": "Prevents usernames from matching usergroups (helps user group tagging)",
-    "version_id": 2000100,
-    "version_string": "2.0.1",
+    "version_id": 2010000,
+    "version_string": "2.1.0",
     "dev": "Xon",
     "dev_url": "https://atelieraphelion.com",
     "faq_url": "",
     "support_url": "https://xenforo.com/community/resources/username-restrictions.5981/",
     "extra_urls": [],
     "require" : {
-        "php": ["5.6.0", "PHP 5.6.0+"]
+        "XF": [2020070, "XenForo 2.2.0+"],
+        "php": ["7.4.0", "PHP 7.4.0+"]
     },
     "icon": ""
 }
