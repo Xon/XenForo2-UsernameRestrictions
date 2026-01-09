@@ -3,6 +3,7 @@
 namespace SV\UsernameRestrictions\XF\Entity;
 
 use Exception;
+use SV\StandardLib\Helper;
 use XF\Repository\UserGroup as UserGroupRepository;
 use function is_string;
 use function preg_match;
@@ -53,8 +54,7 @@ class User extends XFCP_User
         $blockSubset = $options->sv_ur_block_group_subset ?? false;
         $username_lowercase = utf8_strtolower($username);
 
-        /** @var UserGroupRepository $userGroupRepo */
-        $userGroupRepo = \XF::repository('XF:UserGroup');
+        $userGroupRepo = Helper::repository(UserGroupRepository::class);
         $groups = $userGroupRepo->findUserGroupsForList();
 
         foreach ($groups as $group)
