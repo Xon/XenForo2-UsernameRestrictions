@@ -2,7 +2,20 @@
 
 namespace SV\UsernameRestrictions\XF\Entity;
 
-use function strlen, substr, utf8_strpos, utf8_strtolower, strcmp, preg_replace, preg_match, is_string;
+use Exception;
+use XF\Repository\UserGroup as UserGroupRepository;
+use function is_string;
+use function preg_match;
+use function preg_replace;
+use function strcmp;
+use function strlen;
+use function strval;
+use function substr;
+use function trim;
+use function utf8_deaccent;
+use function utf8_romanize;
+use function utf8_strpos;
+use function utf8_strtolower;
 
 class User extends XFCP_User
 {
@@ -31,7 +44,7 @@ class User extends XFCP_User
             return true; // allow existing
         }
 
-        $options = \XF::app()->options();
+        $options = \XF::options();
         if (!($options->sv_ur_apply_to_admins ?? true) && !\XF::visitor()->is_admin)
         {
             return $ret;
@@ -40,7 +53,7 @@ class User extends XFCP_User
         $blockSubset = $options->sv_ur_block_group_subset ?? false;
         $username_lowercase = utf8_strtolower($username);
 
-        /** @var \XF\Repository\UserGroup $userGroupRepo */
+        /** @var UserGroupRepository $userGroupRepo */
         $userGroupRepo = $this->em()->getRepository('XF:UserGroup');
         $groups = $userGroupRepo->findUserGroupsForList();
 
@@ -96,7 +109,7 @@ class User extends XFCP_User
                 }
             }
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
         }
 
