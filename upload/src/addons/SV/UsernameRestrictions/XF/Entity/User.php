@@ -5,7 +5,10 @@ namespace SV\UsernameRestrictions\XF\Entity;
 use Exception;
 use SV\StandardLib\Helper;
 use XF\Repository\UserGroup as UserGroupRepository;
+use XF\Util\Str;
 use function is_string;
+use function mb_strpos;
+use function mb_strtolower;
 use function preg_match;
 use function preg_replace;
 use function strcmp;
@@ -13,10 +16,6 @@ use function strlen;
 use function strval;
 use function substr;
 use function trim;
-use function utf8_deaccent;
-use function utf8_romanize;
-use function utf8_strpos;
-use function utf8_strtolower;
 
 class User extends XFCP_User
 {
@@ -52,22 +51,35 @@ class User extends XFCP_User
         }
 
         $blockSubset = $options->sv_ur_block_group_subset ?? false;
-        $username_lowercase = utf8_strtolower($username);
+        $usernameLowercase = mb_strtolower($username);
 
         $userGroupRepo = Helper::repository(UserGroupRepository::class);
         $groups = $userGroupRepo->findUserGroupsForList();
 
+        if (\XF::$versionId >= 2030000)
+        {
+            $transliterate = [Str::class, 'transliterate'];
+            $normalize = [Str::class, 'normalize'];
+        }
+        else
+        {
+            // XF2.2 doesn't have a great replacement for these
+            /** @noinspection SpellCheckingInspection */
+            $transliterate = ['utf8_romanize'];
+            $normalize = ['utf8_deaccent'];
+        }
+
         foreach ($groups as $group)
         {
-            $groupname = utf8_strtolower($this->standardizeWhiteSpace($group['title']));
-            if (strcmp($groupname, $username_lowercase) === 0)
+            $groupName = mb_strtolower($this->standardizeWhiteSpace($group['title']));
+            if (strcmp($groupName, $usernameLowercase) === 0)
             {
                 $this->error(\XF::phrase('usernames_must_be_unique'), 'username');
 
                 return false;
             }
 
-            if ($blockSubset && (utf8_strpos($groupname, $username_lowercase, 0) === 0))
+            if ($blockSubset && (mb_strpos($groupName, $usernameLowercase, 0) === 0))
             {
                 $this->error(\XF::phrase('usernames_must_be_unique'), 'username');
 
@@ -75,15 +87,15 @@ class User extends XFCP_User
             }
 
             // compare against romanized name to help reduce confusable issues
-            $groupname = utf8_strtolower(utf8_deaccent(utf8_romanize($groupname)));
-            if (strcmp($groupname, $username_lowercase) === 0)
+            $groupName = mb_strtolower($normalize($transliterate($groupName)));
+            if (strcmp($groupName, $usernameLowercase) === 0)
             {
                 $this->error(\XF::phrase('usernames_must_be_unique'), 'username');
 
                 return false;
             }
 
-            if ($blockSubset && (utf8_strpos($groupname, $username_lowercase, 0) === 0))
+            if ($blockSubset && (mb_strpos($groupName, $usernameLowercase, 0) === 0))
             {
                 $this->error(\XF::phrase('usernames_must_be_unique'), 'username');
 
