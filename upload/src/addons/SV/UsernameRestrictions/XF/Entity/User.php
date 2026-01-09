@@ -34,7 +34,7 @@ class User extends XFCP_User
         // unconditionally prevent username's starting with [, as this breaks username tagging
         if (substr($username, 0, 1) == '[')
         {
-            $this->error(\XF::Phrase('please_enter_another_name_required_format'), 'username');
+            $this->error(\XF::phrase('please_enter_another_name_required_format'), 'username');
 
             return false;
         }
@@ -54,7 +54,7 @@ class User extends XFCP_User
         $username_lowercase = utf8_strtolower($username);
 
         /** @var UserGroupRepository $userGroupRepo */
-        $userGroupRepo = $this->em()->getRepository('XF:UserGroup');
+        $userGroupRepo = \XF::repository('XF:UserGroup');
         $groups = $userGroupRepo->findUserGroupsForList();
 
         foreach ($groups as $group)
@@ -69,7 +69,7 @@ class User extends XFCP_User
 
             if ($blockSubset && (utf8_strpos($groupname, $username_lowercase, 0) === 0))
             {
-                $this->error(\XF::Phrase('usernames_must_be_unique'), 'username');
+                $this->error(\XF::phrase('usernames_must_be_unique'), 'username');
 
                 return false;
             }
@@ -85,7 +85,7 @@ class User extends XFCP_User
 
             if ($blockSubset && (utf8_strpos($groupname, $username_lowercase, 0) === 0))
             {
-                $this->error(\XF::Phrase('usernames_must_be_unique'), 'username');
+                $this->error(\XF::phrase('usernames_must_be_unique'), 'username');
 
                 return false;
             }
@@ -94,7 +94,7 @@ class User extends XFCP_User
         return $ret;
     }
 
-    function standardizeWhiteSpace(string $text): string
+    protected function standardizeWhiteSpace(string $text): string
     {
         $text = preg_replace('/\s+/u', ' ', $text);
         try
