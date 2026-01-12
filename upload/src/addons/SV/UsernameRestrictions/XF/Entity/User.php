@@ -65,8 +65,8 @@ class User extends XFCP_User
         {
             // XF2.2 doesn't have a great replacement for these
             /** @noinspection SpellCheckingInspection */
-            $transliterate = ['utf8_romanize'];
-            $normalize = ['utf8_deaccent'];
+            $transliterate = 'utf8_romanize';
+            $normalize = 'utf8_deaccent';
         }
 
         foreach ($groups as $group)
